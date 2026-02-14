@@ -55,29 +55,18 @@ end top_basys3;
 
 architecture top_basys3_arch of top_basys3 is 
 
- 
-  component rippleCarryAdder is
-    port(
-      Cin  : in  std_logic;
-      A    : in  std_logic_vector(3 downto 0);
-      B    : in  std_logic_vector(3 downto 0);
-      S    : out std_logic_vector(3 downto 0);
-      Cout : out std_logic
-    );
-  end component;
-
   signal w_A    : std_logic_vector(3 downto 0);
   signal w_B    : std_logic_vector(3 downto 0);
   signal w_Cin  : std_logic;
   signal w_Sum  : std_logic_vector(3 downto 0);
   signal w_Cout : std_logic;
-
-begin
+ 
+    begin
   w_Cin <= sw(0);
   w_A   <= sw(4 downto 1);
   w_B   <= sw(15 downto 12);
 
-  U0 : rippleCarryAdder
+  U0 : entity work.ripple_adder
     port map(
       Cin  => w_Cin,
       A    => w_A,
@@ -86,8 +75,8 @@ begin
       Cout => w_Cout
     );
 
-  led(3 downto 0)  <= w_Sum;     -- Sum
-  led(15)          <= w_Cout;    -- Cout
+  led(3 downto 0)  <= w_Sum;    
+  led(15)          <= w_Cout;    
   led(14 downto 4) <= (others => '0');
 
 end top_basys3_arch;
